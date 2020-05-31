@@ -8,6 +8,11 @@ export const MODAL_HIDE = 'MODAL_HIDE'
 export const MODAL_PUSH = 'MODAL_PUSH'
 export const MODAL_POP = 'MODAL_POP'
 
+export const ISSUE_FETCH_REQUESTED = 'ISSUE_FETCH_REQUESTED'
+export const ISSUE_FETCH_SUCCEEDED = 'ISSUE_FETCH_SUCCEEDED'
+export const ISSUE_FETCH_FAILED = 'ISSUE_FETCH_FAILED'
+
+
 /*
  * action creators
  */
@@ -54,11 +59,20 @@ const hideModal = () => {
     }
 }
 
+const issueFetchRequested = (payload) => {
+    return {
+        type: ISSUE_FETCH_REQUESTED,
+        payload
+    }
+}
+
+
 export const actionCreators = {
     addIssue,
     removeIssue,
     updateIssue,
     showModal,
     removeModal,
-    hideModal
+    hideModal,
+    issueFetchRequested
 }

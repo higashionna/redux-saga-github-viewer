@@ -12,7 +12,9 @@ const mapStateToProps = ({ user, issue }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({
+    fetchIssueList: actionCreators.issueFetchRequested
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssueTemp)

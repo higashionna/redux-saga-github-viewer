@@ -1,62 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './reducers/rootReducer'
+import saga from './sagas'
+import App from './App'
 
-import { GlobalStyle } from './styles'
-import styled from 'styled-components'
-
-import Header from './components/organisms/Header'
-
-import Index from './components/pages/Index'
-import Profile from './containers/Profile'
-
-import Issue from './containers/Issue'
-import PullRequest from './components/pages/PullRequest'
-
-import { devToolsEnhancer } from 'redux-devtools-extension'
-import Modal from './containers/Modal'
-
-
-const Container = styled.div``
-
-const Content = styled.div`
-  max-width: 896px;
-  margin: 0 auto;
-  padding: 32px 16px;
-`
-const store = createStore(rootReducer, devToolsEnhancer())
-
-const App = () => (
-    <Provider store={store}>
-        <Router basename='/redux-github-viewer'>
-            <Container>
-                <GlobalStyle />
-                <Header />
-                <Content>
-                    <Switch>
-                        <Route path="/profile">
-                            <Profile />
-                        </Route>
-                        <Route path="/issue">
-                            <Issue />
-                        </Route>
-                        <Route path="/pull-request">
-                            <PullRequest />
-                        </Route>
-                        <Route exact path="/">
-                            <Index />
-                        </Route>
-                    </Switch>
-                </Content>
-                <Modal />
-            </Container>
-        </Router>
-    </Provider>
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(sagaMiddleware)),
 )
 
-ReactDOM.render(<App />, document.getElementById('root'))
+sagaMiddleware.run(saga)
+
+ReactDOM.render(
+    <React.StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root'),
+)

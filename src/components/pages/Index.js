@@ -21,11 +21,13 @@ const Content = styled.div``
 const Tabs = [
   {
     key: 'issue',
-    component: <IssueContainer />
+    // eslint-disable-next-line react/display-name
+    component: (key) => <IssueContainer key={key} />
   },
   {
     key: 'pull-requests',
-    component: <PullRequestTab />
+    // eslint-disable-next-line react/display-name
+    component: (key) => <PullRequestTab key={key} />
   }
 ]
 
@@ -35,7 +37,7 @@ const Index = () => {
     <Container>
       <Content>
         <TabHeader selected={selected} onChange={setSelected} tabs={tabs} />
-        {Tabs.map((item) => (selected === item.key ? item.component : <></>))}
+        {Tabs.map((item) => (selected === item.key ? item.component(item.key) : <div key={item.key}></div>))}
       </Content>
     </Container>
   )

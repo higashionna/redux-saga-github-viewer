@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react'
+import React, { useMemo, useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { colors } from '../../styles/variable'
@@ -76,15 +76,20 @@ const IssueTemp = ({
   removeModal,
   addIssue,
   updateIssue,
-  removeIssue
+  fetchIssueList
 }) => {
+  useEffect(() => {
+    if (user) {
+      fetchIssueList({ owner: user.name });
+    }
+  }, [user, fetchIssueList])
   const [searchWord, setSearchWord] = useState('')
   const list = useMemo(() => {
     const values = Object.values(data)
     if (!searchWord) {
       return values
     }
-    return values.filter((value) => value.title.includes(searchWord))
+    return values.filter(value => value.title.includes(searchWord))
   }, [data, searchWord])
 
   const onNew = useCallback(() => {
@@ -140,12 +145,6 @@ const IssueTemp = ({
     [data, checked]
   )
 
-  const onRemove = useCallback(() => {
-    Object.values(checked).forEach((issue) => {
-      removeIssue({ issue })
-    })
-  }, [checked, removeIssue])
-
   return (
     < Container >
       <Header>
@@ -163,7 +162,7 @@ const IssueTemp = ({
           <Button type="primary" onClick={onNew}>
             New
           </Button>
-          <Button type="danger" onClick={onRemove}>
+          <Button type="danger">
             Delete
           </Button>
         </Action>
@@ -222,7 +221,7 @@ IssueTemp.propTypes = {
   removeModal: PropTypes.func,
   addIssue: PropTypes.func,
   updateIssue: PropTypes.func,
-  removeIssue: PropTypes.func,
+  fetchIssueList: PropTypes.func,
 }
 
 export default IssueTemp
