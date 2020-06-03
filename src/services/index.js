@@ -26,3 +26,8 @@ export const fetchIssueList = async () => {
         console.error(e);
     }
 };
+
+export const createIssue = async ({ owner, data }) => {
+    const res = await client.post(`/repos/${owner}/${repo}/issues`, data);
+    return res.data;
+};

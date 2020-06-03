@@ -11,7 +11,9 @@ export const MODAL_POP = 'MODAL_POP'
 export const ISSUE_FETCH_REQUESTED = 'ISSUE_FETCH_REQUESTED'
 export const ISSUE_FETCH_SUCCEEDED = 'ISSUE_FETCH_SUCCEEDED'
 export const ISSUE_FETCH_FAILED = 'ISSUE_FETCH_FAILED'
-
+export const ISSUE_CREATE_REQUESTED = 'ISSUE_CREATE_REQUESTED'
+export const ISSUE_CREATE_SUCCEEDED = 'ISSUE_CREATE_SUCCEEDED'
+export const ISSUE_CREATE_FAILED = 'ISSUE_CREATE_FAILED'
 
 /*
  * action creators
@@ -66,6 +68,13 @@ const issueFetchRequested = (payload) => {
     }
 }
 
+const issueCreateRequested = (payload) => {
+    return {
+        type: ISSUE_CREATE_REQUESTED,
+        payload
+    }
+}
+
 
 export const actionCreators = {
     addIssue,
@@ -74,5 +83,6 @@ export const actionCreators = {
     showModal,
     removeModal,
     hideModal,
-    issueFetchRequested
+    issueFetchRequested,
+    issueCreateRequested
 }

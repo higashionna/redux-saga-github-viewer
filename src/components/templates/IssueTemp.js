@@ -74,9 +74,9 @@ const IssueTemp = ({
   user,
   showModal,
   removeModal,
-  addIssue,
   updateIssue,
-  fetchIssueList
+  fetchIssueList,
+  createIssue
 }) => {
   useEffect(() => {
     if (user) {
@@ -93,14 +93,18 @@ const IssueTemp = ({
   }, [data, searchWord])
 
   const onNew = useCallback(() => {
-    const onAdd = (payload) => {
-      addIssue(payload)
-      removeModal()
-    }
+    const onAdd = ({ issue }) => {
+      const { title, body } = issue
+      createIssue({
+        title,
+        body
+      });
+      removeModal();
+    };
     showModal({
       component: <NewIssue user={user} onSubmit={onAdd} onClose={removeModal} />
     })
-  }, [user, showModal, removeModal, addIssue])
+  }, [user, showModal, removeModal, createIssue])
 
   const onEdit = useCallback(
     (issue) => {
@@ -222,6 +226,7 @@ IssueTemp.propTypes = {
   addIssue: PropTypes.func,
   updateIssue: PropTypes.func,
   fetchIssueList: PropTypes.func,
+  createIssue: PropTypes.func
 }
 
 export default IssueTemp
