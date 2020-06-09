@@ -83,6 +83,7 @@ const IssueTemp = ({
       fetchIssueList({ owner: user.name });
     }
   }, [user, fetchIssueList])
+
   const [searchWord, setSearchWord] = useState('')
   const list = useMemo(() => {
     const values = Object.values(data)
@@ -107,18 +108,32 @@ const IssueTemp = ({
   }, [user, showModal, removeModal, createIssue])
 
   const onEdit = useCallback(
-    (issue) => {
+    issue => {
+      const onUpdate = ({ issue }) => {
+        const { title, body, state, number } = issue
+        updateIssue(
+          {
+            issueNumber: number,
+            issue: {
+              title,
+              body,
+              state
+            }
+          }
+        )
+        removeModal()
+      }
       showModal({
         component: (
           <EditIssue
             issue={issue}
-            onSubmit={updateIssue}
+            onSubmit={onUpdate}
             onClose={removeModal}
           />
-        )
+        ),
       })
     },
-    [showModal, removeModal, updateIssue]
+    [showModal, removeModal, updateIssue],
   )
 
   const [checked, setChecked] = useState({})
@@ -197,7 +212,7 @@ const IssueTemp = ({
                     key={item.id}
                     issue={item}
                     onClick={onEdit}
-                    checked={checked[item.id]}
+                    checked={!!checked[item.id]}
                     onCheck={onCheck}
                   />
                 )

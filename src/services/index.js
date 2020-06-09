@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 /* eslint-disable no-undef */
-const username = process.env.REACT_APP_GITHUB_USERNAME;
-const accessToken = process.env.REACT_APP_GITHUB_ACCESS_TOKEN;
-const repo = process.env.REACT_APP_GITHUB_REPO;
+const username = process.env.REACT_APP_GITHUB_USERNAME
+const accessToken = process.env.REACT_APP_GITHUB_ACCESS_TOKEN
+const repo = process.env.REACT_APP_GITHUB_REPO
 /* eslint-enable no-undef */
 
 const client = axios.create({
@@ -13,7 +13,7 @@ const client = axios.create({
         username,
         password: accessToken,
     },
-});
+})
 
 export const fetchIssueList = async () => {
     try {
@@ -21,13 +21,20 @@ export const fetchIssueList = async () => {
         return (
             res.data
         )
-
     } catch (e) {
-        console.error(e);
+        console.error(e)
     }
-};
+}
 
 export const createIssue = async ({ owner, data }) => {
-    const res = await client.post(`/repos/${owner}/${repo}/issues`, data);
-    return res.data;
-};
+    const res = await client.post(`/repos/${owner}/${repo}/issues`, data)
+    return res.data
+}
+
+export const updateIssue = async ({ owner, issueNumber, data }) => {
+    const res = await client.post(
+        `/repos/${owner}/${repo}/issues/${issueNumber}`,
+        data
+    )
+    return res.data
+}

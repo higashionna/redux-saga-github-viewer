@@ -16,7 +16,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchIssueList: actionCreators.issueFetchRequested,
     createIssue: actionCreators.issueCreateRequested,
     showModal: actionCreators.showModal,
-    removeModal: actionCreators.removeModal
+    removeModal: actionCreators.removeModal,
+    updateIssue: actionCreators.issueUpdateRequested
   }, dispatch)
 }
 

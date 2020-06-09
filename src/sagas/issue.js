@@ -47,9 +47,31 @@ function* createIssue(action) {
     }
 }
 
+function* updateIssue(action) {
+    try {
+        const { issue, issueNumber } = action.payload
+        yield call(api.updateIssue, {
+            data: issue,
+            issueNumber: issueNumber,
+            owner: "higashionna"
+        });
+        yield put({ type: ActionType.ISSUE_UPDATE_SUCCEEDED });
+        yield put({ type: ActionType.ISSUE_FETCH_REQUESTED });
+        success("issueを更新しました")
+    } catch (e) {
+        console.error(e)
+        error("更新に失敗しました")
+        yield put({
+            type: ActionType.ISSUE_UPDATE_FAILED,
+            payload: { message: 'issueの更新に失敗しました' },
+        });
+    }
+}
+
 function* issueSaga() {
     yield takeLatest(ActionType.ISSUE_FETCH_REQUESTED, fetchIssueList)
     yield takeLatest(ActionType.ISSUE_CREATE_REQUESTED, createIssue)
+    yield takeLatest(ActionType.ISSUE_UPDATE_REQUESTED, updateIssue)
 }
 
 export default issueSaga

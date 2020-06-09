@@ -57,7 +57,7 @@ const EditIssue = ({ issue, onSubmit, onClose }) => {
     const [validationError, setValidationError] = useState('')
     const [title, setTitle] = useState(issue.title)
     const [status, setStatus] = useState(issue.status)
-    const [description, setDescription] = useState(issue.description)
+    const [body, setBody] = useState(issue.body)
 
     const onChangeStatus = useCallback(
         (e) => {
@@ -72,7 +72,7 @@ const EditIssue = ({ issue, onSubmit, onClose }) => {
             return
         }
 
-        if (!description) {
+        if (!body) {
             setValidationError('説明を入力してください')
             return
         }
@@ -82,13 +82,13 @@ const EditIssue = ({ issue, onSubmit, onClose }) => {
             issue: {
                 ...issue,
                 title,
-                description,
+                body,
                 status,
                 updatedAt: now
             }
         })
         onClose()
-    }, [issue, title, status, description, onSubmit, onClose, setValidationError])
+    }, [issue, title, status, body, onSubmit, onClose, setValidationError])
 
     return (
         <Container>
@@ -105,9 +105,9 @@ const EditIssue = ({ issue, onSubmit, onClose }) => {
                 <Field>
                     <Label>説明</Label>
                     <TextArea
-                        value={description}
+                        value={body}
                         placeholder="説明を入力してください"
-                        onChangeText={setDescription}
+                        onChangeText={setBody}
                     />
                 </Field>
                 <Field>
