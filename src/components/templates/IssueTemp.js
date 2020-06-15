@@ -80,7 +80,7 @@ const IssueTemp = ({
 }) => {
   useEffect(() => {
     if (user) {
-      fetchIssueList({ owner: user.name });
+      fetchIssueList({ owner: user.name })
     }
   }, [user, fetchIssueList])
 
@@ -99,9 +99,9 @@ const IssueTemp = ({
       createIssue({
         title,
         body
-      });
-      removeModal();
-    };
+      })
+      removeModal()
+    }
     showModal({
       component: <NewIssue user={user} onSubmit={onAdd} onClose={removeModal} />
     })
@@ -164,6 +164,31 @@ const IssueTemp = ({
     [data, checked]
   )
 
+  const onRemove = useCallback(
+    () => {
+      if (!window.confirm("削除しますか？")) {
+        return
+      }
+      if (!Object.values(checked).length) {
+        window.alert("削除するissueを選択してください")
+        return
+      }
+      const removeIssue = (issue) => {
+        updateIssue({
+          issueNumber: issue.number,
+          issue: {
+            state: 'closed'
+          }
+        })
+      }
+      Object.values(checked).forEach(issue => {
+        removeIssue(issue)
+      })
+      setChecked({})
+    },
+    [checked, updateIssue]
+  )
+
   return (
     < Container >
       <Header>
@@ -181,7 +206,7 @@ const IssueTemp = ({
           <Button type="primary" onClick={onNew}>
             New
           </Button>
-          <Button type="danger">
+          <Button type="danger" onClick={onRemove}>
             Delete
           </Button>
         </Action>
