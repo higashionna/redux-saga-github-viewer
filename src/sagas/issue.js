@@ -7,13 +7,13 @@ import * as ActionType from '../actions'
 const success = (message) => toast(message, {
     position: toast.POSITION.TOP_CENTER,
     className: 'toast-success',
-    autoClose: false,
+    autoClose: true | 2000,
     hideProgressBar: true
 });
 const error = (message) => toast(message, {
     position: toast.POSITION.TOP_CENTER,
     className: 'toast-error',
-    autoClose: false,
+    autoClose: true | 2000,
     hideProgressBar: true
 });
 
