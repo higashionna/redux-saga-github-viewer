@@ -16,9 +16,9 @@ const onClickLink = e => e.stopPropagation();
 const noop = () => undefined;
 
 const IssueItem = ({ checked, onClick, onCheck, issue }) => {
-  const { id, title, state, user, htmlUrl, createdAt, updatedAt } = issue;
+  const { id, title, state, htmlUrl, createdAt, updatedAt } = issue;
   const _onClick = useCallback(
-    e => {
+    () => {
       onClick(issue);
     },
     [issue, onClick],
@@ -47,7 +47,7 @@ const IssueItem = ({ checked, onClick, onCheck, issue }) => {
         </a>
       </td>
       <td>{state}</td>
-      <td>{user.login}</td>
+      <td></td>
       <td>{dayjs(createdAt).format('MM-DD-YYYY')}</td>
       <td>{dayjs(updatedAt).format('MM-DD-YYYY')}</td>
     </Container>

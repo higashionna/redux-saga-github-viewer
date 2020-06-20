@@ -47,6 +47,7 @@ function* createIssue(action) {
     }
 }
 
+
 function* updateIssue(action) {
     try {
         const { issue, issueNumber } = action.payload
@@ -55,8 +56,8 @@ function* updateIssue(action) {
             issueNumber: issueNumber,
             owner: "higashionna"
         });
-        yield put({ type: ActionType.ISSUE_UPDATE_SUCCEEDED });
-        yield put({ type: ActionType.ISSUE_FETCH_REQUESTED });
+        yield put({ type: ActionType.ISSUE_UPDATE_SUCCEEDED })
+        yield put({ type: ActionType.ISSUE_FETCH_REQUESTED })
         success("issueを更新しました")
     } catch (e) {
         console.error(e)
@@ -64,7 +65,7 @@ function* updateIssue(action) {
         yield put({
             type: ActionType.ISSUE_UPDATE_FAILED,
             payload: { message: 'issueの更新に失敗しました' },
-        });
+        })
     }
 }
 

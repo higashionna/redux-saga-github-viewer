@@ -9,6 +9,8 @@ import Profile from './containers/Profile'
 import Issue from './components/pages/Issue'
 import PullRequest from './components/pages/PullRequest'
 import Modal from './containers/Modal'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Container = styled.div``
 
@@ -41,6 +43,7 @@ const App = () => {
                     </Switch>
                 </Content>
                 <Modal />
+                <ToastContainer />
             </Container>
         </Router>
     )
