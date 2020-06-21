@@ -5,12 +5,14 @@ import { actionCreators } from '../actions'
 
 const mapStateToProps = ({ user }) => {
     return {
-        user
+        user: user.data
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(actionCreators, dispatch)
+    return bindActionCreators({
+        fetchUser: actionCreators.userFetchRequested,
+    }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

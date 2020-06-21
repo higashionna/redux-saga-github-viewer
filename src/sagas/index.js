@@ -1,7 +1,12 @@
-import issueSaga from './issue'
+import { all } from 'redux-saga/effects';
+import userSaga from './user';
+import issueSaga from './issue';
 
 function* rootSaga() {
-    yield issueSaga()
+    yield all([
+        userSaga(),
+        issueSaga()
+    ]);
 }
 
-export default rootSaga
+export default rootSaga;

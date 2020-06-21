@@ -15,6 +15,15 @@ const client = axios.create({
     },
 })
 
+export const fetchUser = async () => {
+    try {
+        const res = await client.get('/user')
+        return res.data
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 export const fetchIssueList = async () => {
     try {
         const res = await client.get(`/repos/${username}/${repo}/issues`)
